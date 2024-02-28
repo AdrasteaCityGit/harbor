@@ -60,10 +60,43 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
         footer {
-            background-color: #446688;
+            background-color: #1a1a1a;
             color: white;
-            text-align: center;
-            padding: 1rem;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        footer img {
+            max-width: 250px;
+            border-radius: 80%;
+        }
+        footer div {
+            flex: 1;
+            margin-bottom: 20px;
+        }
+        footer h3 {
+            color: #5dbcd2;
+            border-bottom: 2px solid #5dbcd2;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        footer p {
+            color: #5dbcd2;
+            line-height: 1.5;
+            margin-bottom: 8px;
+        }
+        footer a {
+            color: #5dbcd2;
+            text-decoration: none;
+            transition: color 0.3s ease-in-out;
+        }
+        footer a:hover {
+            color: #ffffff;
+        }
+        footer small {
+            font-size: 0.8rem;
+            text-align: right;
         }
         h2 {
             color: #446688;
@@ -99,10 +132,10 @@
     </header>
     <nav>
         <ul>
-            <li><a href="#intro">Introduction</a></li>
-            <li><a href="#about-phaedrix">About PHAEDRIX</a></li>
+            <li><a href="#intro">Phaedrix Blog</a></li>
+            <li><a href="#about-phaedrix">Bug Tracker</a></li>
             <li><a href="#cybersecurity-tools">Cybersecurity Tools</a></li>
-            <li><a href="#contact">Contact Us</a></li>
+            <li><a href="#contact">Projects</a></li>
         </ul>
     </nav>
     <main>
@@ -149,7 +182,29 @@
         </section>
     </main>
     <footer>
-        &copy; 2024 PHAEDRIX.us - All rights reserved.
+        <div>
+            <img src="logo.png" alt="PHAEDRIX Logo" height="250px">
+        </div>
+        <div>
+            <h3>Social Media</h3>
+            <p>
+                <a href="#">Facebook |</a>
+                <a href="#">Twitter |</a>
+                <a href="#">LinkedIn</a>
+            </p>
+        </div>
+        <div>
+            <h3>Quick Links</h3>
+            <p>
+                <a href="#intro">Introduction |</a>
+                <a href="#about-phaedrix">About PHAEDRIX |</a>
+                <a href="#cybersecurity-tools">Cybersecurity Tools |</a>
+                <a href="#contact">Contact Us</a>
+            </p>
+        </div>
+        <div>
+            <small>&copy; 2024 PHAEDRIX.us - All rights reserved.</small>
+        </div>
     </footer>
 </body>
 </html>
