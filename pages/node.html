@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matrix Background with Centered Logos</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            height: 100vh;
+            background: black;
+            color: white;
+        }
+
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+
+        #logos-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .logo {
+            margin: 20px;
+            max-width: 300px;
+            max-height: 300px;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="matrix"></canvas>
+    
+    <div id="logos-container">
+        <img src="../images/adrastea_city_git.png" alt="Logo 1" class="logo">
+        <img src="../images/Ciphersec_us.png" alt="Logo 2" class="logo">
+        <img src="../images/infoharbor.png" alt="Logo 3" class="logo">
+        <img src="../images/phaedrix.us2.png" alt="Logo 4" class="logo">
+    </div>
+
+    <script>
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const cols = Math.floor(canvas.width / 20) + 1;
+        const ypos = Array(cols).fill(0);
+
+        function matrix() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = '#0F0';
+            ctx.font = '15pt monospace';
+
+            ypos.forEach((y, index) => {
+                const text = String.fromCharCode(Math.random() * 128);
+                const x = index * 20;
+                ctx.fillText(text, x, y);
+                if (y > 100 + Math.random() * 10000) ypos[index] = 0;
+                else ypos[index] = y + 20;
+            });
+        }
+
+        function animate() {
+            matrix();
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            ypos.length = 0;
+            for (let i = 0; i < Math.floor(canvas.width / 20) + 1; i++) {
+                ypos[i] = 0;
+            }
+        });
+
+        animate();
+    </script>
+</body>
+</html>
