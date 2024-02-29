@@ -3,6 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta https-equiv="Content-Security-Policy" content="
+        default-src 'self' https://phaedrix.us;             
+        script-src 'self';                                   
+        style-src 'self' 'unsafe-inline';                    
+        img-src 'self' https://phaedrix.us/logo.png;          
+        font-src 'self';                                     
+        connect-src 'self';                                  
+        object-src 'none';                                   
+        base-uri 'self';                                      
+        form-action 'self';                                   
+        frame-ancestors 'none';                              
+    ">
     <title>PHAEDRIX - Projects</title>
     <style>
         body {
