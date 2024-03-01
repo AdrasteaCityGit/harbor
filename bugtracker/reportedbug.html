@@ -149,45 +149,5 @@
           <small>&copy; 2024 PHAEDRIX.us - All rights reserved.</small>
       </div>
     </footer>
-
-    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-database.js"></script>
-    <script>
-      const firebaseConfig = {
-        apiKey: "AIzaSyCwGVVMESfdObFK_N9Wh8lkvPZUlqkk66U",
-        authDomain: "dbharbor-da3b5.firebaseapp.com",
-        projectId: "dbharbor-da3b5",
-        storageBucket: "dbharbor-da3b5.appspot.com",
-        messagingSenderId: "504026074367",
-        appId: "1:504026074367:web:17a2057bb5fa0ba43990ca"
-      };
-
-      firebase.initializeApp(firebaseConfig);
-      const database = firebase.database();
-
-      function displayReportedBugs() {
-        const reportedBugsSection = document.getElementById('reportedBugs');
-        reportedBugsSection.innerHTML = ''; // Clear the section
-
-        const bugsRef = database.ref('bugs');
-        bugsRef.once('value', snapshot => {
-          if (snapshot.exists()) {
-            snapshot.forEach(childSnapshot => {
-              const bug = childSnapshot.val();
-              const bugElement = document.createElement('article');
-              bugElement.innerHTML = `<h3>${bug.title}</h3><p>${bug.description}</p>`;
-              reportedBugsSection.appendChild(bugElement);
-            });
-          } else {
-            reportedBugsSection.innerHTML = '<p>No bugs reported yet.</p>';
-          }
-        });
-      }
-
-      // Call to display bugs when the page loads
-      window.onload = function() {
-        displayReportedBugs();
-      };
-    </script>
 </body>
 </html>
