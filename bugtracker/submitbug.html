@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PHAEDRIX - Bug Tracker</title>
+    <title>Bug Tracker</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -44,10 +44,6 @@
             margin-bottom: 2rem;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        main a{
-            text-decoration: none;
-            text-decoration-line: none;
         }
         h2 {
             color: #446688;
@@ -98,30 +94,42 @@
             font-size: 0.8rem;
             text-align: right;
         }
+        .read-more {
+            display: inline-block;
+            background-color: #446688;
+            color: white;
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease-in-out;
+        }
+        .read-more:hover {
+            background-color: #2e4563;
+        }
     </style>
 </head>
 <body>
     <header>
-        <h1>PHAEDRIX - Bug Tracker</h1>
+        <h1>Bug Tracker</h1>
     </header>
     <nav>
       <ul>
         <li><a href="../index.html">Home</a></li>
-        <li><a href="../pages/blog.html">Phaedrix Blog</a></li>
-        <li><a href="../pages/cybersecurity_tool.html">Cybersecurity Tools</a></li>
+        <li><a href="../pages/bug_tracker.html">Bug Tracker</a></li>
+        <li><a href="../pages/cybersecurity-tools.html">Cybersecurity Tools</a></li>
         <li><a href="../pages/projects.html">Projects</a></li>
       </ul>
     </nav>
     <main>
-        <a href="../bugtracker/reportedbug.html"><article>
-            <h2>Reported Bugs</h2>
-            <p>View and track the status of reported bugs in our systems.</p>
-        </article></a>
-        <a href="../bugtracker/submitbug.html"><article>
-            <h2>Submit a Bug</h2>
-            <p>Help us improve by reporting any bugs you encounter.</p>
-        </article></a>
-        <!-- Add more bug tracker related content as needed -->
+        <form id="bugForm">
+            <label for="bugTitle">Bug Title:</label>
+            <input type="text" id="bugTitle" required>
+            <label for="bugDescription">Bug Description:</label>
+            <textarea id="bugDescription" required></textarea>
+            <button type="button" onclick="reportBug()">Report Bug</button>
+        </form>
+        <h2>Reported Bugs</h2>
+        <section id="reportedBugs"></section>
     </main>
     <footer>
       <div>
@@ -148,5 +156,65 @@
           <small>&copy; 2024 PHAEDRIX.us - All rights reserved.</small>
       </div>
   </footer>
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-database.js"></script>
+    <script>
+      // Your Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyCwGVVMESfdObFK_N9Wh8lkvPZUlqkk66U",
+        authDomain: "dbharbor-da3b5.firebaseapp.com",
+        projectId: "dbharbor-da3b5",
+        storageBucket: "dbharbor-da3b5.appspot.com",
+        messagingSenderId: "504026074367",
+        appId: "1:504026074367:web:17a2057bb5fa0ba43990ca"
+      };
+
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      const database = firebase.database();
+
+      function reportBug() {
+        const bugTitle = document.getElementById('bugTitle').value;
+        const bugDescription = document.getElementById('bugDescription').value;
+
+        if (bugTitle && bugDescription) {
+          const bugsRef = database.ref('bugs');
+          const newBugRef = bugsRef.push();
+
+          newBugRef.set({
+            title: bugTitle,
+            description: bugDescription
+          }).then(() => {
+            // Refresh the list of reported bugs after the new bug has been successfully added
+            displayReportedBugs();
+            document.getElementById('bugForm').reset();
+          }).catch(error => {
+            console.error("Error reporting the bug: ", error);
+            alert('There was an error reporting the bug. Please try again.');
+          });
+        } else {
+          alert('Please provide both bug title and description.');
+        }
+      }
+
+      function displayReportedBugs() {
+        const reportedBugsSection = document.getElementById('reportedBugs');
+        reportedBugsSection.innerHTML = ''; // Clear the section
+
+        const bugsRef = database.ref('bugs');
+        bugsRef.once('value', snapshot => {
+          snapshot.forEach(childSnapshot => {
+            const bug = childSnapshot.val();
+            const bugElement = document.createElement('p');
+            bugElement.textContent = `Title: ${bug.title}, Description: ${bug.description}`;
+            reportedBugsSection.appendChild(bugElement);
+          });
+        });
+      }
+
+      // Initial call to display bugs
+      displayReportedBugs();
+    </script>
 </body>
 </html>
