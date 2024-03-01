@@ -38,12 +38,37 @@
         main {
             padding: 2rem;
         }
-        article {
+        form {
             background-color: #ffffff;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
+            padding: 2rem;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #446688;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 0.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #446688;
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #2e4563;
         }
         h2 {
             color: #446688;
@@ -51,9 +76,8 @@
             padding-bottom: 0.5rem;
             margin-bottom: 1.5rem;
         }
-        p {
-            color: #555;
-            line-height: 1.5;
+        #reportedBugs {
+            margin-top: 2rem;
         }
         footer {
             background-color: #1a1a1a;
@@ -121,15 +145,18 @@
       </ul>
     </nav>
     <main>
-        <form id="bugForm">
+        <form id="bugForm" action="https://formspree.io/f/xgegydwn" method="POST">
             <label for="bugTitle">Bug Title:</label>
-            <input type="text" id="bugTitle" required>
+            <input type="text" name="bugTitle" id="bugTitle" required />
+
             <label for="bugDescription">Bug Description:</label>
-            <textarea id="bugDescription" required></textarea>
-            <button type="button" onclick="reportBug()">Report Bug</button>
+            <textarea name="bugDescription" id="bugDescription" required></textarea>
+
+            <label for="userEmail">Your Email:</label>
+            <input type="email" name="userEmail" id="userEmail" required />
+
+            <button type="submit">Report Bug</button>
         </form>
-        <h2>Reported Bugs</h2>
-        <section id="reportedBugs"></section>
     </main>
     <footer>
       <div>
